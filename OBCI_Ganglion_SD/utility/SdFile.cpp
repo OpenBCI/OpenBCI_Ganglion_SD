@@ -197,9 +197,9 @@ void SdFile::dirName(const dir_t& dir, char* name) {
  * \param[in] indent Amount of space before file name. Used for recursive
  * list to indicate subdirectory level.
  */
-void SdFile::ls(uint8_t flags, uint8_t indent) {
+uint32_t SdFile::ls(uint8_t flags, uint8_t indent) {
   dir_t* p;
-
+  uint16_t fileCounter= 0;
   rewind();
   while ((p = readDirCache())) {
     // done if past last used entry
@@ -216,7 +216,7 @@ void SdFile::ls(uint8_t flags, uint8_t indent) {
 
     // print file name with possible blank fill
     printDirName(*p, flags & (LS_DATE | LS_SIZE) ? 14 : 0);
-
+    fileCounter++;
     // print modify date/time if requested
     if (flags & LS_DATE) {
        printFatDate(p->lastWriteDate);
@@ -239,6 +239,7 @@ void SdFile::ls(uint8_t flags, uint8_t indent) {
     }
     delay(10);
   }
+  return fileCounter;
 }
 //------------------------------------------------------------------------------
 // format directory name field from a 8.3 name string

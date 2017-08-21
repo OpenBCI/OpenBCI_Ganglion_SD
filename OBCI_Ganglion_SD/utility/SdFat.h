@@ -217,7 +217,7 @@ class SdFile : public Print {
   uint8_t isRoot(void) const {
     return type_ == FAT_FILE_TYPE_ROOT16 || type_ == FAT_FILE_TYPE_ROOT32;
   }
-  void ls(uint8_t flags = 0, uint8_t indent = 0);
+  uint32_t ls(uint8_t flags = 0, uint8_t indent = 0);
   uint8_t makeDir(SdFile* dir, const char* dirName);
   uint8_t open(SdFile* dirFile, uint16_t index, uint8_t oflag);
   uint8_t open(SdFile* dirFile, const char* fileName, uint8_t oflag);
